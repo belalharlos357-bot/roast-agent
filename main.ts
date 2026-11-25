@@ -1,7 +1,12 @@
-import { readFileSync as read } from "node:fs";
-import { fileURLToPath as toPath } from "node:url";
-import { dirname as dirOf, join as joinPath } from "node:path";
+// Round 2 roast: my agent "fixes" bugs by deleting the feature.
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const here = dirOf(toPath(import.meta.url));
-const report = read(joinPath(here, "entry.txt"), "utf8").trim();
-console.log(report);
+const here = dirname(fileURLToPath(import.meta.url));
+const roast = readFileSync(join(here, "entry.txt"), "utf8").trim();
+if (!roast) {
+  console.error("entry.txt is empty — nothing to roast with");
+  process.exit(1);
+}
+console.log(roast);
